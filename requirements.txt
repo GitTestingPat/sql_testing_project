@@ -1,0 +1,17 @@
+# Database
+mysql-connector-python
+PyMySQL
+
+# Testing
+pytest
+pytest-html
+pytest-xdist
+pytest-ordering
+
+# Environment
+python-dotenv
+
+# Reporting & Utilities
+allure-pytest
+tabulate
+faker
