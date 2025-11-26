@@ -1,3 +1,3 @@
-from config.db_config import DBConfig
+from config.db_config import DBConfig, SakilaConfig
 
-__all__ = ['DBConfig']
+__all__ = ['DBConfig', 'SakilaConfig']

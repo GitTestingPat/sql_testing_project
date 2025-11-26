@@ -10,7 +10,18 @@ from data.test_data import (
     INVALID_PRODUCT_DATA
 )
 
+from data.sakila_test_data import (
+    SAKILA_TABLES,
+    SAKILA_VIEWS,
+    SAKILA_CATEGORIES,
+    SAKILA_RATINGS,
+    SAKILA_LANGUAGES,
+    SAKILA_EXPECTED_COUNTS,
+    SAKILA_TEST_QUERIES
+)
+
 __all__ = [
+    # test_database
     'TestDataGenerator',
     'CREATE_USERS_TABLE',
     'CREATE_PRODUCTS_TABLE',
@@ -19,5 +30,13 @@ __all__ = [
     'VALID_USER',
     'VALID_PRODUCT',
     'INVALID_USER_DATA',
-    'INVALID_PRODUCT_DATA'
+    'INVALID_PRODUCT_DATA',
+    # sakila
+    'SAKILA_TABLES',
+    'SAKILA_VIEWS',
+    'SAKILA_CATEGORIES',
+    'SAKILA_RATINGS',
+    'SAKILA_LANGUAGES',
+    'SAKILA_EXPECTED_COUNTS',
+    'SAKILA_TEST_QUERIES'
 ]

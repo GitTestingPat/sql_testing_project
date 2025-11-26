@@ -2,82 +2,108 @@
 
 Proyecto de pruebas automatizadas para bases de datos MySQL usando pytest.
 
+## Bases de Datos
+
+Este proyecto incluye tests para dos bases de datos:
+
+| Base de Datos | Descripción | Tests |
+|---------------|-------------|-------|
+| `test_database` | Base de datos de prueba con tablas users, products, orders | 65 tests |
+| `sakila` | Base de datos de ejemplo de MySQL (tienda de DVD) | 91 tests |
+
+**Total: 156 tests**
+
+---
+
 ## Estructura del Proyecto
 
 ```
 sql_testing_project/
 ├── config/
-│   └── db_config.py          # Configuración de conexión a BD
+│   ├── __init__.py
+│   └── db_config.py              # Configuración para test_database y sakila
 ├── data/
-│   └── test_data.py          # Datos de prueba y generadores
+│   ├── __init__.py
+│   ├── test_data.py              # Datos para test_database
+│   └── sakila_test_data.py       # Datos para sakila
 ├── database/
-│   └── db_connector.py       # Conector MySQL con operaciones CRUD
+│   ├── __init__.py
+│   └── db_connector.py           # Conector MySQL
 ├── tests/
-│   ├── conftest.py           # Fixtures de pytest
-│   ├── test_crud_operations.py    # Tests CRUD
-│   ├── test_data_integrity.py     # Tests de integridad
-│   └── test_performance.py        # Tests de rendimiento
-├── reports/                  # Reportes HTML generados
-├── .env                      # Variables de entorno (no commitear)
-├── .env.example              # Plantilla de variables de entorno
-├── pytest.ini                # Configuración de pytest
-└── requirements.txt          # Dependencias del proyecto
+│   ├── __init__.py
+│   ├── conftest.py               # Fixtures de pytest
+│   ├── test_crud_operations.py   # Tests CRUD (test_database)
+│   ├── test_data_integrity.py    # Tests integridad (test_database)
+│   ├── test_performance.py       # Tests rendimiento (test_database)
+│   ├── test_sakila_schema.py     # Tests schema (sakila)
+│   ├── test_sakila_data.py       # Tests datos (sakila)
+│   ├── test_sakila_queries.py    # Tests queries (sakila)
+│   └── test_sakila_performance.py # Tests rendimiento (sakila)
+├── reports/
+├── .env
+├── .env.example
+├── .gitignore
+├── pytest.ini
+├── requirements.txt
+└── README.md
 ```
+
+---
 
 ## Requisitos Previos
 
 - Python 3.10+
 - MySQL Server 8.0+
-- PyCharm IDE 
+- PyCharm IDE (recomendado)
+- Base de datos Sakila instalada (con datos)
+
+---
 
 ## Instalación
 
-### 1. Clonar o Crear el Proyecto
+### 1. Clonar el Proyecto
 
 ```bash
-# Crear directorio del proyecto
-mkdir sql_testing_project
+git clone <repo-url>
 cd sql_testing_project
 ```
 
-### 2. Crear Entorno Virtual en PyCharm
+### 2. Crear Entorno Virtual
 
-1. Abrir PyCharm
-2. `File > Open` → seleccionar la carpeta del proyecto
-3. `File > Settings > Project > Python Interpreter`
-4. Click en el engranaje ⚙️ → `Add`
-5. Seleccionar `Virtualenv Environment > New`
-6. Click `OK`
+PyCharm lo crea automáticamente al abrir el proyecto.
 
 ### 3. Instalar Dependencias
-
-En la terminal de PyCharm:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Configurar Base de Datos MySQL
+### 4. Configurar Base de Datos test_database
 
-Conectarse a MySQL y ejecutar:
+Conectar a MySQL y ejecutar:
 
 ```sql
--- Crear base de datos de prueba
 CREATE DATABASE IF NOT EXISTS test_database;
-
--- Crear usuario de prueba (opcional)
-CREATE USER IF NOT EXISTS 'test_user'@'localhost' IDENTIFIED BY 'test_password';
-GRANT ALL PRIVILEGES ON test_database.* TO 'test_user'@'localhost';
-FLUSH PRIVILEGES;
 ```
 
-### 5. Configurar Variables de Entorno
+### 5. Verificar Sakila
 
-Copiar `.env.example` a `.env` y editar:
+Sakila debe estar instalada con datos. Verificar:
+
+```sql
+USE sakila;
+SELECT COUNT(*) FROM actor;  -- Debe mostrar 200
+```
+
+Si no está instalada o no tiene datos, descargar de: https://dev.mysql.com/doc/index-other.html
 
 ```bash
-cp .env.example .env
+# Importar schema y datos
+mysql -u root -p < sakila-schema.sql
+mysql -u root -p < sakila-data.sql
 ```
+
+### 6. Configurar Variables de Entorno
 
 Editar `.env`:
 
@@ -85,103 +111,232 @@ Editar `.env`:
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
-DB_PASSWORD=tu_password_aqui
+DB_PASSWORD=tu_password
 DB_NAME=test_database
 ```
 
-## Configuración de PyCharm
-
-### Configurar pytest como Test Runner
-
-1. `File > Settings > Tools > Python Integrated Tools`
-2. En "Default test runner" seleccionar `pytest`
-3. Click `OK`
-
-### Configurar Run Configuration
-
-1. `Run > Edit Configurations`
-2. Click `+` → `pytest`
-3. Configurar:
-   - **Name**: `All Tests`
-   - **Target**: `Custom`
-   - **Additional Arguments**: `-v --tb=short`
-   - **Working directory**: `/ruta/al/proyecto`
-4. Click `OK`
+---
 
 ## Ejecución de Tests
 
-### Desde Terminal
+### Todos los Tests
 
 ```bash
-# Ejecutar todos los tests
 pytest
-
-# Ejecutar con reporte HTML
-pytest --html=reports/report.html --self-contained-html
-
-# Ejecutar por marcadores
-pytest -m crud          # Solo tests CRUD
-pytest -m integrity     # Solo tests de integridad
-pytest -m performance   # Solo tests de rendimiento
-pytest -m smoke         # Tests rápidos de humo
-
-# Ejecutar archivo específico
-pytest tests/test_crud_operations.py
-
-# Ejecutar test específico
-pytest tests/test_crud_operations.py::TestCreateOperations::test_insert_single_user
-
-# Ejecutar en paralelo
-pytest -n auto
 ```
 
-### Desde PyCharm
+### Solo test_database
 
-1. Click derecho en `tests/` → `Run 'pytest in tests'`
-2. O usar el botón verde ▶️ junto a cada test
-3. Ver resultados en la ventana "Run"
+```bash
+pytest tests/test_crud_operations.py tests/test_data_integrity.py tests/test_performance.py
+```
 
-## Estructura de Tests
+### Solo Sakila
 
-### Test CRUD (`test_crud_operations.py`)
+```bash
+pytest -m sakila
+```
 
-| ID | Test | Descripción |
-|---|------|-------------|
-| TC-CR-001 | test_insert_single_user | Inserción simple de usuario |
-| TC-CR-002 | test_insert_user_data_persisted | Verificar datos persistidos |
-| TC-CR-003 | test_insert_single_product | Inserción de producto |
-| TC-CR-004 | test_insert_many_users | Inserción masiva de usuarios |
-| TC-RD-001 | test_select_all_users | SELECT sin condiciones |
-| TC-UP-001 | test_update_single_field | UPDATE de un campo |
-| TC-DL-001 | test_delete_single_record | DELETE de un registro |
+### Por Categoría
 
-### Test Integridad (`test_data_integrity.py`)
+```bash
+pytest -m crud          # Operaciones CRUD
+pytest -m integrity     # Integridad de datos
+pytest -m performance   # Rendimiento
+pytest -m schema        # Validación de schema
+pytest -m data          # Validación de datos
+pytest -m queries       # Validación de queries
+```
 
-| ID | Test | Descripción |
-|---|------|-------------|
-| TC-INT-001 | test_users_table_exists | Verificar existencia de tabla |
-| TC-CON-001 | test_unique_username_constraint | Constraint UNIQUE |
-| TC-CON-005 | test_foreign_key_user_constraint | Constraint FOREIGN KEY |
-| TC-DT-001 | test_decimal_precision_price | Precisión DECIMAL |
-| TC-REF-001 | test_order_references_valid_user | Integridad referencial |
+### Con Reporte HTML
 
-### Test Rendimiento (`test_performance.py`)
+```bash
+pytest --html=reports/report.html --self-contained-html
+```
 
-| ID | Test | Descripción |
-|---|------|-------------|
-| TC-PERF-001 | test_select_all_performance | Performance SELECT * |
-| TC-PERF-006 | test_bulk_insert_100_records | Performance inserción masiva |
-| TC-PERF-011 | test_mixed_operations | Operaciones mixtas CRUD |
+---
+
+## Tests de test_database
+
+### test_crud_operations.py (25 tests)
+
+Valida operaciones CRUD básicas:
+
+| Clase | Tests | Descripción |
+|-------|-------|-------------|
+| TestCreateOperations | 7 | INSERT simple, múltiple, duplicados |
+| TestReadOperations | 8 | SELECT, filtros, ORDER BY, LIMIT, COUNT |
+| TestUpdateOperations | 5 | UPDATE simple, múltiple, condicional |
+| TestDeleteOperations | 5 | DELETE, CASCADE, TRUNCATE |
+
+### test_data_integrity.py (26 tests)
+
+Valida integridad y constraints:
+
+| Clase | Tests | Descripción |
+|-------|-------|-------------|
+| TestSchemaIntegrity | 6 | Existencia de tablas y columnas |
+| TestConstraints | 8 | UNIQUE, NOT NULL, FOREIGN KEY, ENUM |
+| TestDataTypes | 5 | DECIMAL, INT, BOOLEAN, VARCHAR, TIMESTAMP |
+| TestReferentialIntegrity | 4 | JOINs, CASCADE DELETE |
+| TestDataConsistency | 3 | Defaults, timestamps automáticos |
+
+### test_performance.py (14 tests)
+
+Mide tiempos de ejecución:
+
+| Clase | Tests | Descripción |
+|-------|-------|-------------|
+| TestQueryPerformance | 5 | SELECT, filtros, JOINs |
+| TestBulkOperationPerformance | 4 | INSERT masivo, UPDATE, DELETE |
+| TestStressTests | 3 | Operaciones repetidas, mixtas |
+| TestConnectionPerformance | 2 | Conexión, context manager |
+
+### test_database: Estructura
+
+#### Tabla users
+
+| Columna | Tipo | Descripción |
+|---------|------|-------------|
+| id | INT | Primary key, auto increment |
+| username | VARCHAR(50) | Único, no nulo |
+| email | VARCHAR(100) | Único, no nulo |
+| password_hash | VARCHAR(255) | No nulo |
+| first_name | VARCHAR(50) | Nombre |
+| last_name | VARCHAR(50) | Apellido |
+| age | INT | Edad |
+| is_active | BOOLEAN | Default TRUE |
+| created_at | TIMESTAMP | Auto generado |
+| updated_at | TIMESTAMP | Auto actualizado |
+
+#### Tabla products
+
+| Columna | Tipo | Descripción |
+|---------|------|-------------|
+| id | INT | Primary key, auto increment |
+| name | VARCHAR(100) | No nulo |
+| description | TEXT | Descripción |
+| price | DECIMAL(10,2) | No nulo |
+| stock | INT | Default 0 |
+| category | VARCHAR(50) | Categoría |
+| is_available | BOOLEAN | Default TRUE |
+| created_at | TIMESTAMP | Auto generado |
+
+#### Tabla orders
+
+| Columna | Tipo | Descripción |
+|---------|------|-------------|
+| id | INT | Primary key, auto increment |
+| user_id | INT | FK → users(id), CASCADE |
+| product_id | INT | FK → products(id), CASCADE |
+| quantity | INT | No nulo |
+| total_price | DECIMAL(10,2) | No nulo |
+| status | ENUM | pending, processing, shipped, delivered, cancelled |
+| order_date | TIMESTAMP | Auto generado |
+
+### Diagrama ER - test_database
+
+```
+users ──────< orders >────── products
+  │              │
+  │         [user_id]
+  │         [product_id]
+  │              │
+  └──────────────┘
+     CASCADE DELETE
+```
+
+---
+
+## Tests de Sakila
+
+### test_sakila_schema.py (35 tests)
+
+Valida la estructura de la base de datos:
+
+- Existencia de las 16 tablas
+- Existencia de las 7 vistas
+- Columnas de cada tabla
+- Primary keys y foreign keys
+- Constraints (ENUM, NOT NULL)
+
+### test_sakila_data.py (22 tests)
+
+Valida los datos existentes:
+
+- Conteo de registros por tabla
+- Valores válidos (categorías, ratings, idiomas)
+- Integridad referencial
+- Datos no nulos donde se requiere
+
+### test_sakila_queries.py (21 tests)
+
+Valida queries complejas:
+
+- SELECTs básicos y filtrados
+- JOINs de múltiples tablas
+- Agregaciones (COUNT, SUM, AVG)
+- Subqueries
+
+### test_sakila_performance.py (13 tests)
+
+Mide tiempos de ejecución:
+
+- SELECT en tablas grandes
+- JOINs complejos
+- Agregaciones
+- Vistas
+
+### Sakila: Estructura
+
+#### Tablas Principales
+
+| Tabla | Registros | Descripción |
+|-------|-----------|-------------|
+| actor | 200 | Actores de películas |
+| film | 1000 | Catálogo de películas |
+| customer | 599 | Clientes de la tienda |
+| rental | 16044 | Historial de alquileres |
+| payment | 16049 | Pagos realizados |
+| inventory | 4581 | Inventario por tienda |
+| category | 16 | Categorías de películas |
+| language | 6 | Idiomas disponibles |
+| store | 2 | Tiendas |
+| staff | 2 | Empleados |
+
+#### Vistas
+
+- `customer_list` - Lista de clientes con dirección
+- `film_list` - Películas con categoría y actores
+- `sales_by_film_category` - Ventas por categoría
+- `sales_by_store` - Ventas por tienda
+- `staff_list` - Lista de empleados
+- `actor_info` - Actores con sus películas
+- `nicer_but_slower_film_list` - Lista detallada de películas
+
+### Diagrama ER - Sakila (Simplificado)
+
+```
+customer ──< rental >── inventory ──< film
+    │           │                      │
+    │           │                      ├──< film_actor >── actor
+    │           │                      │
+    │           │                      └──< film_category >── category
+    │           │
+    └───< payment
+```
+
+---
 
 ## Uso del DatabaseConnector
 
 ```python
 from database.db_connector import DatabaseConnector
 
-# Usando context manager 
+# Usando context manager (recomendado)
 with DatabaseConnector() as db:
     # Insert
-    user_id = db.insert('users', {'username': 'test', 'email': 'test@test.com'})
+    user_id = db.insert('users', {'username': 'test', 'email': 'test@test.com', 'password_hash': 'hash'})
     
     # Select
     users = db.select('users', condition='is_active = %s', condition_params=(True,))
@@ -193,8 +348,10 @@ with DatabaseConnector() as db:
     db.delete('users', 'id = %s', (user_id,))
     
     # Custom query
-    result = db.execute_query("SELECT COUNT(*) FROM users")
+    result = db.execute_query("SELECT COUNT(*) as count FROM users")
 ```
+
+---
 
 ## Generación de Datos de Prueba
 
@@ -212,50 +369,54 @@ columns, data = TestDataGenerator.generate_bulk_users_tuple(100)
 db.insert_many('users', columns, data)
 ```
 
-## Reportes
-
-### Reporte HTML
-
-```bash
-pytest --html=reports/report.html --self-contained-html
-```
-
-### Reporte Allure
-
-```bash
-# Generar datos
-pytest --alluredir=allure-results
-
-# Ver reporte
-allure serve allure-results
-```
+---
 
 ## Troubleshooting
 
-### Error de Conexión
+### Error: test_database not found
 
+```sql
+CREATE DATABASE test_database;
 ```
-Error: Access denied for user 'root'@'localhost'
+
+### Error: sakila database not found
+
+```bash
+# Descargar sakila
+wget https://downloads.mysql.com/docs/sakila-db.zip
+unzip sakila-db.zip
+cd sakila-db
+
+# Importar
+mysql -u root -p < sakila-schema.sql
+mysql -u root -p < sakila-data.sql
 ```
-**Solución**: Verificar credenciales en `.env`
 
-### Error de Codificación
+### Error: sakila tables empty (COUNT = 0)
 
+Solo importaste el schema. Necesitas importar los datos:
+
+```bash
+mysql -u root -p sakila < sakila-data.sql
 ```
-Error: 'latin-1' codec can't encode character
+
+### Error: Access denied
+
+Verificar credenciales en `.env`
+
+### Error: COLUMN_NAME KeyError
+
+Cambiar `column_name` por `COLUMN_NAME` en los tests de schema.
+
+### Error en Mac: mysql command not found
+
+Usar la ruta completa:
+
+```bash
+/usr/local/mysql/bin/mysql -u root -p
 ```
-**Solución**: Agregar `charset='utf8mb4'` en db_connector.py
 
-### Tests Fallan en CI/CD
-
-Asegurarse de que las variables de entorno están configuradas en el pipeline.
-
-## Extensiones Sugeridas
-
-1. **Agregar más tablas**: Extender el schema según necesidades
-2. **Tests de transacciones**: Verificar rollback en errores
-3. **Tests de concurrencia**: Usar threading para tests paralelos
-4. **Fixtures parametrizadas**: Usar `@pytest.mark.parametrize`
+---
 
 ## Licencia
 

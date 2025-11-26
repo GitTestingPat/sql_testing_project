@@ -5,6 +5,8 @@ Pytest configuration and fixtures for database testing.
 import pytest
 import sys
 from pathlib import Path
+import mysql.connector
+from config.db_config import SakilaConfig
 
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -143,3 +145,27 @@ def pytest_configure(config):
 def pytest_html_report_title(report):
     """Set the title for HTML report."""
     report.title = "SQL Database Test Report"
+
+
+@pytest.fixture(scope='session')
+def sakila_connection():
+    """Session-scoped connection to Sakila database."""
+    from config.db_config import SakilaConfig
+
+    db = DatabaseConnector()
+    params = SakilaConfig.get_connection_params()
+    db.connection = mysql.connector.connect(**params)
+    db.cursor = db.connection.cursor(dictionary=True)
+
+    # Asegurar uso de la base de datos sakila
+    db.cursor.execute("USE sakila")
+
+    yield db
+
+    db.disconnect()
+
+
+@pytest.fixture(scope='function')
+def sakila_db(sakila_connection):
+    """Function-scoped fixture for Sakila database."""
+    return sakila_connection
