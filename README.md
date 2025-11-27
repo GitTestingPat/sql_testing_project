@@ -418,6 +418,43 @@ Usar la ruta completa:
 
 ---
 
+
+---
+
+## Documentación de QA
+
+La documentación completa de casos de prueba y análisis de testing está disponible en Google Sheets:
+
+📊 **[SQL Testing Project - Documentación QA](https://docs.google.com/spreadsheets/d/1M13hRENhFRlPA3dYDVCM5hzl46PCC-UZ78Jn1-h-kiU/edit?usp=drive_link)**
+
+### Contenido de la Documentación
+
+| Hoja | Descripción |
+|------|-------------|
+| Resumen | Información general del proyecto |
+| Test Cases - test_database | 65 casos de prueba detallados |
+| Test Cases - Sakila | 70 casos de prueba detallados |
+| Clases de Equivalencia | Análisis de clases de equivalencia y valores límite |
+| Checklist | Lista de verificación con 60 items |
+| Matriz de Trazabilidad | Mapeo de requisitos a casos de prueba |
+
+### Archivos CSV Fuente
+
+Los archivos CSV originales están en la carpeta `docs/`:
+
+```
+docs/
+├── 00_summary.csv                      # Resumen del proyecto
+├── test_cases_test_database.csv        # Casos de prueba test_database
+├── test_cases_sakila.csv               # Casos de prueba Sakila
+├── equivalence_classes_boundary_values.csv  # Clases de equivalencia
+├── verification_checklist.csv          # Checklist de verificación
+└── traceability_matrix.csv             # Matriz de trazabilidad
+```
+
+---
+
 ## Licencia
 
 MIT License
+
