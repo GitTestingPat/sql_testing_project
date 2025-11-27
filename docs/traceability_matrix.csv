@@ -1,0 +1,36 @@
+REQUISITO_ID,REQUISITO,DESCRIPCIÓN,TEST_IDS_ASOCIADOS,COBERTURA,PRIORIDAD
+REQ-001,Conexión a MySQL,El sistema debe conectarse a bases de datos MySQL,TC-PERF-013; TC-PERF-014; TC-SAK-001,100%,Alta
+REQ-002,Soporte múltiples BD,El sistema debe soportar múltiples bases de datos,TC-SAK-001; todos los tests,100%,Alta
+REQ-003,INSERT simple,El sistema debe permitir insertar registros individuales,"TC-CR-001; TC-CR-002; TC-CR-003",100%,Alta
+REQ-004,INSERT múltiple,El sistema debe permitir insertar múltiples registros,"TC-CR-004; TC-CR-005; TC-PERF-006; TC-PERF-007",100%,Alta
+REQ-005,SELECT simple,El sistema debe permitir consultar registros,"TC-RD-001; TC-SAK-037",100%,Alta
+REQ-006,SELECT con filtros,El sistema debe soportar WHERE en consultas,"TC-RD-002; TC-SAK-038; TC-SAK-039",100%,Alta
+REQ-007,SELECT con ORDER BY,El sistema debe soportar ordenamiento,"TC-RD-004; TC-SAK-040",100%,Alta
+REQ-008,SELECT con LIMIT,El sistema debe soportar límite de resultados,"TC-RD-005; TC-SAK-037",100%,Alta
+REQ-009,UPDATE simple,El sistema debe permitir actualizar registros,"TC-UP-001; TC-UP-002",100%,Alta
+REQ-010,UPDATE condicional,El sistema debe soportar UPDATE con WHERE,"TC-UP-004; TC-UP-005",100%,Alta
+REQ-011,DELETE simple,El sistema debe permitir eliminar registros,"TC-DL-001; TC-DL-002",100%,Alta
+REQ-012,DELETE CASCADE,El sistema debe soportar eliminación en cascada,"TC-DL-004; TC-REF-003",100%,Alta
+REQ-013,COUNT registros,El sistema debe contar registros,"TC-RD-006; TC-RD-007; TC-SAK-015 a TC-SAK-023",100%,Alta
+REQ-014,JOIN tablas,El sistema debe soportar JOINs,"TC-PERF-005; TC-SAK-042 a TC-SAK-046",100%,Alta
+REQ-015,Agregaciones,El sistema debe soportar funciones de agregación,"TC-RD-008; TC-SAK-047 a TC-SAK-054",100%,Alta
+REQ-016,Subqueries,El sistema debe soportar subconsultas,"TC-SAK-055; TC-SAK-056; TC-SAK-057",100%,Alta
+REQ-017,Validar UNIQUE,El sistema debe respetar constraint UNIQUE,"TC-CR-006; TC-CR-007; TC-CON-001; TC-CON-002",100%,Alta
+REQ-018,Validar NOT NULL,El sistema debe respetar constraint NOT NULL,"TC-CON-003; TC-CON-004",100%,Alta
+REQ-019,Validar FK,El sistema debe respetar foreign keys,"TC-CON-005; TC-CON-006; TC-SAK-031 a TC-SAK-036",100%,Alta
+REQ-020,Validar ENUM,El sistema debe respetar tipos ENUM,"TC-CON-007; TC-CON-008; TC-SAK-014",100%,Alta
+REQ-021,Tipos de datos,El sistema debe manejar tipos de datos correctamente,"TC-DT-001 a TC-DT-005",100%,Media
+REQ-022,Timestamps automáticos,El sistema debe generar timestamps automáticamente,"TC-DT-005; TC-CONS-003",100%,Media
+REQ-023,Valores DEFAULT,El sistema debe aplicar valores default,"TC-CONS-002",100%,Media
+REQ-024,Validar schema,El sistema debe validar estructura de tablas,"TC-INT-001 a TC-INT-006; TC-SAK-002 a TC-SAK-014",100%,Alta
+REQ-025,Validar vistas,El sistema debe validar existencia de vistas,"TC-SAK-003; TC-SAK-005",100%,Media
+REQ-026,Performance SELECT,SELECT debe ejecutar en tiempo aceptable,"TC-PERF-001 a TC-PERF-004; TC-SAK-058 a TC-SAK-067",100%,Media
+REQ-027,Performance INSERT,INSERT debe ejecutar en tiempo aceptable,"TC-PERF-006 a TC-PERF-009",100%,Media
+REQ-028,Performance JOIN,JOINs deben ejecutar en tiempo aceptable,"TC-PERF-005; TC-SAK-060; TC-SAK-061",100%,Media
+REQ-029,Performance vistas,Vistas deben ejecutar en tiempo aceptable,"TC-SAK-068 a TC-SAK-070",100%,Media
+REQ-030,Manejo de errores,El sistema debe manejar errores gracefully,"TC-CR-006; TC-CR-007; TC-UP-003; TC-DL-003",100%,Alta
+REQ-031,Context manager,El conector debe soportar context manager,"TC-PERF-014",100%,Media
+REQ-032,Generación datos,El sistema debe generar datos de prueba,"TC-CR-004; TC-CR-005; TC-PERF-006; TC-PERF-007",100%,Media
+REQ-033,Integridad referencial,Los datos deben mantener integridad referencial,"TC-REF-001 a TC-REF-004; TC-SAK-031 a TC-SAK-036",100%,Alta
+REQ-034,Consistencia datos,Los datos deben ser consistentes,"TC-CONS-001 a TC-CONS-003; TC-SAK-024 a TC-SAK-030",100%,Alta
+REQ-035,Soporte Sakila,El sistema debe soportar base de datos Sakila,Todos los TC-SAK-*,100%,Alta

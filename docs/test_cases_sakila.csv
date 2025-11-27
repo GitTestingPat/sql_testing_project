@@ -1,0 +1,71 @@
+TEST_ID,MÓDULO,CLASE,CASO DE PRUEBA,DESCRIPCIÓN,PRECONDICIONES,DATOS DE ENTRADA,PASOS,RESULTADO ESPERADO,TIPO,PRIORIDAD,ESTADO
+TC-SAK-001,Schema,TestSakilaSchemaExists,test_sakila_database_accessible,Verificar acceso a BD Sakila,Sakila instalada,Ninguno,1. SELECT DATABASE(),Retorna 'sakila',Schema,Alta,Automatizado
+TC-SAK-002,Schema,TestSakilaSchemaExists,test_table_exists[parametrizado],Verificar existencia de cada tabla,Sakila instalada,16 nombres de tablas,1. Consultar information_schema por cada tabla,Cada tabla existe,Schema,Alta,Automatizado
+TC-SAK-003,Schema,TestSakilaSchemaExists,test_view_exists[parametrizado],Verificar existencia de cada vista,Sakila instalada,7 nombres de vistas,1. Consultar information_schema por cada vista,Cada vista existe,Schema,Alta,Automatizado
+TC-SAK-004,Schema,TestSakilaSchemaExists,test_total_table_count,Verificar conteo total de tablas,Sakila instalada,Ninguno,1. COUNT tablas en information_schema,COUNT = 16,Schema,Media,Automatizado
+TC-SAK-005,Schema,TestSakilaSchemaExists,test_total_view_count,Verificar conteo total de vistas,Sakila instalada,Ninguno,1. COUNT vistas en information_schema,COUNT = 7,Schema,Media,Automatizado
+TC-SAK-006,Schema,TestSakilaTableColumns,test_actor_table_columns,Verificar columnas de tabla actor,Tabla actor existe,"actor_id, first_name, last_name, last_update",1. Consultar columns,Todas las columnas existen,Schema,Alta,Automatizado
+TC-SAK-007,Schema,TestSakilaTableColumns,test_film_table_columns,Verificar columnas de tabla film,Tabla film existe,"film_id, title, description, release_year, etc.",1. Consultar columns,Todas las columnas existen,Schema,Alta,Automatizado
+TC-SAK-008,Schema,TestSakilaTableColumns,test_customer_table_columns,Verificar columnas de tabla customer,Tabla customer existe,"customer_id, store_id, first_name, last_name, etc.",1. Consultar columns,Todas las columnas existen,Schema,Alta,Automatizado
+TC-SAK-009,Schema,TestSakilaTableColumns,test_rental_table_columns,Verificar columnas de tabla rental,Tabla rental existe,"rental_id, rental_date, inventory_id, etc.",1. Consultar columns,Todas las columnas existen,Schema,Alta,Automatizado
+TC-SAK-010,Schema,TestSakilaTableColumns,test_payment_table_columns,Verificar columnas de tabla payment,Tabla payment existe,"payment_id, customer_id, staff_id, amount, etc.",1. Consultar columns,Todas las columnas existen,Schema,Alta,Automatizado
+TC-SAK-011,Schema,TestSakilaConstraints,test_film_primary_key,Verificar PK de tabla film,Tabla film existe,Ninguno,1. Consultar key_column_usage,PK = film_id,Schema,Alta,Automatizado
+TC-SAK-012,Schema,TestSakilaConstraints,test_rental_foreign_keys,Verificar FKs de tabla rental,Tabla rental existe,Ninguno,1. Consultar key_column_usage,FKs a customer inventory y staff,Schema,Alta,Automatizado
+TC-SAK-013,Schema,TestSakilaConstraints,test_film_actor_composite_key,Verificar PK compuesta film_actor,Tabla film_actor existe,Ninguno,1. Consultar key_column_usage,PK = (actor_id y film_id),Schema,Alta,Automatizado
+TC-SAK-014,Schema,TestSakilaConstraints,test_film_rating_enum,Verificar ENUM en rating,Tabla film existe,Ninguno,1. Consultar COLUMN_TYPE,"ENUM con G, PG, PG-13, R, NC-17",Schema,Alta,Automatizado
+TC-SAK-015,Data,TestSakilaRecordCounts,test_actor_count,Verificar conteo de actores,Datos cargados,Ninguno,1. COUNT(*) FROM actor,COUNT = 200,Data,Alta,Automatizado
+TC-SAK-016,Data,TestSakilaRecordCounts,test_film_count,Verificar conteo de películas,Datos cargados,Ninguno,1. COUNT(*) FROM film,COUNT = 1000,Data,Alta,Automatizado
+TC-SAK-017,Data,TestSakilaRecordCounts,test_customer_count,Verificar conteo de clientes,Datos cargados,Ninguno,1. COUNT(*) FROM customer,COUNT = 599,Data,Alta,Automatizado
+TC-SAK-018,Data,TestSakilaRecordCounts,test_rental_count,Verificar conteo de alquileres,Datos cargados,Ninguno,1. COUNT(*) FROM rental,COUNT >= 16000,Data,Alta,Automatizado
+TC-SAK-019,Data,TestSakilaRecordCounts,test_payment_count,Verificar conteo de pagos,Datos cargados,Ninguno,1. COUNT(*) FROM payment,COUNT >= 16000,Data,Alta,Automatizado
+TC-SAK-020,Data,TestSakilaRecordCounts,test_category_count,Verificar conteo de categorías,Datos cargados,Ninguno,1. COUNT(*) FROM category,COUNT = 16,Data,Media,Automatizado
+TC-SAK-021,Data,TestSakilaRecordCounts,test_language_count,Verificar conteo de idiomas,Datos cargados,Ninguno,1. COUNT(*) FROM language,COUNT = 6,Data,Media,Automatizado
+TC-SAK-022,Data,TestSakilaRecordCounts,test_store_count,Verificar conteo de tiendas,Datos cargados,Ninguno,1. COUNT(*) FROM store,COUNT = 2,Data,Media,Automatizado
+TC-SAK-023,Data,TestSakilaRecordCounts,test_staff_count,Verificar conteo de empleados,Datos cargados,Ninguno,1. COUNT(*) FROM staff,COUNT = 2,Data,Media,Automatizado
+TC-SAK-024,Data,TestSakilaDataValues,test_all_categories_exist,Verificar todas las categorías,Datos cargados,"Action, Animation, Children, etc.",1. SELECT name FROM category,16 categorías específicas,Data,Alta,Automatizado
+TC-SAK-025,Data,TestSakilaDataValues,test_all_ratings_used,Verificar todos los ratings,Datos cargados,"G, PG, PG-13, R, NC-17",1. SELECT DISTINCT rating FROM film,5 ratings presentes,Data,Alta,Automatizado
+TC-SAK-026,Data,TestSakilaDataValues,test_all_languages_exist,Verificar todos los idiomas,Datos cargados,"English, Italian, Japanese, etc.",1. SELECT name FROM language,6 idiomas presentes,Data,Media,Automatizado
+TC-SAK-027,Data,TestSakilaDataValues,test_film_rental_rates_valid,Verificar rental_rate positivo,Datos cargados,Ninguno,1. COUNT WHERE rental_rate <= 0,COUNT = 0,Data,Alta,Automatizado
+TC-SAK-028,Data,TestSakilaDataValues,test_film_replacement_costs_valid,Verificar replacement_cost positivo,Datos cargados,Ninguno,1. COUNT WHERE replacement_cost <= 0,COUNT = 0,Data,Alta,Automatizado
+TC-SAK-029,Data,TestSakilaDataValues,test_customer_emails_not_null,Verificar emails no nulos,Datos cargados,Ninguno,1. COUNT WHERE email IS NULL,COUNT = 0,Data,Alta,Automatizado
+TC-SAK-030,Data,TestSakilaDataValues,test_payment_amounts_positive,Verificar pagos no negativos,Datos cargados,Ninguno,1. COUNT WHERE amount < 0,COUNT = 0,Data,Alta,Automatizado
+TC-SAK-031,Data,TestSakilaDataIntegrity,test_all_films_have_language,Verificar FK film-language,Datos cargados,Ninguno,1. LEFT JOIN film-language WHERE NULL,COUNT = 0,Integridad,Alta,Automatizado
+TC-SAK-032,Data,TestSakilaDataIntegrity,test_all_rentals_have_customer,Verificar FK rental-customer,Datos cargados,Ninguno,1. LEFT JOIN rental-customer WHERE NULL,COUNT = 0,Integridad,Alta,Automatizado
+TC-SAK-033,Data,TestSakilaDataIntegrity,test_all_payments_have_rental,Verificar FK payment-rental,Datos cargados,Ninguno,1. LEFT JOIN payment-rental WHERE NULL,COUNT = 0,Integridad,Alta,Automatizado
+TC-SAK-034,Data,TestSakilaDataIntegrity,test_all_inventory_has_film,Verificar FK inventory-film,Datos cargados,Ninguno,1. LEFT JOIN inventory-film WHERE NULL,COUNT = 0,Integridad,Alta,Automatizado
+TC-SAK-035,Data,TestSakilaDataIntegrity,test_film_categories_valid,Verificar relación film-category,Datos cargados,Ninguno,1. LEFT JOIN film_category validando ambas FKs,COUNT inválidos = 0,Integridad,Alta,Automatizado
+TC-SAK-036,Data,TestSakilaDataIntegrity,test_film_actors_valid,Verificar relación film-actor,Datos cargados,Ninguno,1. LEFT JOIN film_actor validando ambas FKs,COUNT inválidos = 0,Integridad,Alta,Automatizado
+TC-SAK-037,Queries,TestSakilaBasicQueries,test_select_all_actors,Verificar SELECT básico con LIMIT,Datos cargados,LIMIT 10,1. SELECT * FROM actor LIMIT 10,10 registros con columnas correctas,Query,Alta,Automatizado
+TC-SAK-038,Queries,TestSakilaBasicQueries,test_select_films_by_rating,Verificar SELECT con filtro,Datos cargados,rating = 'PG-13',1. SELECT WHERE rating = 'PG-13',Todos los resultados tienen rating PG-13,Query,Alta,Automatizado
+TC-SAK-039,Queries,TestSakilaBasicQueries,test_select_active_customers,Verificar SELECT clientes activos,Datos cargados,active = 1,1. SELECT WHERE active = 1,Todos tienen active = 1,Query,Alta,Automatizado
+TC-SAK-040,Queries,TestSakilaBasicQueries,test_select_films_with_order,Verificar ORDER BY,Datos cargados,ORDER BY rental_rate DESC,1. SELECT con ORDER BY,Resultados ordenados DESC,Query,Media,Automatizado
+TC-SAK-041,Queries,TestSakilaBasicQueries,test_select_with_like,Verificar LIKE pattern,Datos cargados,title LIKE 'A%',1. SELECT WHERE title LIKE 'A%',Todos empiezan con A,Query,Media,Automatizado
+TC-SAK-042,Queries,TestSakilaJoinQueries,test_film_with_language,Verificar JOIN film-language,Datos cargados,Ninguno,1. SELECT con JOIN,language no nulo,Query,Alta,Automatizado
+TC-SAK-043,Queries,TestSakilaJoinQueries,test_customer_with_address,Verificar JOIN customer-address-city,Datos cargados,Ninguno,1. SELECT con 2 JOINs,city no nulo,Query,Alta,Automatizado
+TC-SAK-044,Queries,TestSakilaJoinQueries,test_rental_full_details,Verificar JOIN múltiple rental,Datos cargados,Ninguno,1. SELECT con 4 JOINs,Todos los campos presentes,Query,Alta,Automatizado
+TC-SAK-045,Queries,TestSakilaJoinQueries,test_film_with_actors,Verificar JOIN film-actor,Datos cargados,film_id = 1,1. SELECT actores de película 1,Al menos 1 actor,Query,Alta,Automatizado
+TC-SAK-046,Queries,TestSakilaJoinQueries,test_film_with_categories,Verificar JOIN film-category,Datos cargados,LIMIT 20,1. SELECT con JOIN,20 resultados,Query,Media,Automatizado
+TC-SAK-047,Queries,TestSakilaAggregationQueries,test_count_films_by_rating,Verificar COUNT con GROUP BY,Datos cargados,GROUP BY rating,1. COUNT por rating,5 grupos que suman 1000,Query,Alta,Automatizado
+TC-SAK-048,Queries,TestSakilaAggregationQueries,test_top_rented_films,Verificar top películas alquiladas,Datos cargados,ORDER BY rental_count DESC LIMIT 10,1. COUNT rentals por film,10 resultados ordenados,Query,Alta,Automatizado
+TC-SAK-049,Queries,TestSakilaAggregationQueries,test_revenue_by_category,Verificar revenue por categoría,Datos cargados,SUM(amount) GROUP BY category,1. Calcular revenue por categoría,16 categorías con revenue > 0,Query,Alta,Automatizado
+TC-SAK-050,Queries,TestSakilaAggregationQueries,test_customer_rental_history,Verificar historial por cliente,Datos cargados,COUNT rentals por customer LIMIT 10,1. COUNT por cliente,10 clientes con rentals > 0,Query,Media,Automatizado
+TC-SAK-051,Queries,TestSakilaAggregationQueries,test_actor_film_count,Verificar películas por actor,Datos cargados,COUNT films por actor LIMIT 10,1. COUNT por actor ordenado DESC,10 actores ordenados,Query,Media,Automatizado
+TC-SAK-052,Queries,TestSakilaAggregationQueries,test_average_rental_rate,Verificar AVG rental_rate,Datos cargados,Ninguno,1. AVG(rental_rate),Valor entre 0 y 10,Query,Media,Automatizado
+TC-SAK-053,Queries,TestSakilaAggregationQueries,test_total_revenue,Verificar SUM payments,Datos cargados,Ninguno,1. SUM(amount),Total > 0,Query,Alta,Automatizado
+TC-SAK-054,Queries,TestSakilaAggregationQueries,test_min_max_film_length,Verificar MIN/MAX length,Datos cargados,Ninguno,1. MIN y MAX length,MIN < MAX,Query,Media,Automatizado
+TC-SAK-055,Queries,TestSakilaSubqueries,test_films_above_average_rental,Verificar subquery AVG,Datos cargados,WHERE rental_rate > (SELECT AVG),1. SELECT con subquery,Todos > promedio,Query,Alta,Automatizado
+TC-SAK-056,Queries,TestSakilaSubqueries,test_customers_with_most_rentals,Verificar subquery correlacionada,Datos cargados,Subquery COUNT por customer,1. SELECT con subquery correlacionada,5 clientes ordenados,Query,Alta,Automatizado
+TC-SAK-057,Queries,TestSakilaSubqueries,test_films_not_rented,Verificar NOT IN subquery,Datos cargados,WHERE film_id NOT IN inventory,1. COUNT películas sin inventory,COUNT >= 0,Query,Media,Automatizado
+TC-SAK-058,Performance,TestSakilaQueryPerformance,test_simple_select_performance,Medir SELECT * FROM film,Datos cargados,Ninguno,1. Medir tiempo,< 1 segundo,Performance,Media,Automatizado
+TC-SAK-059,Performance,TestSakilaQueryPerformance,test_filtered_select_performance,Medir SELECT con filtro,Datos cargados,rating = 'PG-13',1. Medir tiempo,< 0.5 segundos,Performance,Media,Automatizado
+TC-SAK-060,Performance,TestSakilaQueryPerformance,test_join_performance,Medir JOIN 2 tablas,Datos cargados,film-category JOIN,1. Medir tiempo,< 1 segundo,Performance,Media,Automatizado
+TC-SAK-061,Performance,TestSakilaQueryPerformance,test_complex_join_performance,Medir JOIN 5 tablas,Datos cargados,rental con 4 JOINs,1. Medir tiempo,< 3 segundos,Performance,Media,Automatizado
+TC-SAK-062,Performance,TestSakilaQueryPerformance,test_aggregation_performance,Medir GROUP BY con JOIN,Datos cargados,COUNT por category,1. Medir tiempo,< 1 segundo,Performance,Media,Automatizado
+TC-SAK-063,Performance,TestSakilaQueryPerformance,test_subquery_performance,Medir subquery,Datos cargados,WHERE > AVG subquery,1. Medir tiempo,< 1 segundo,Performance,Media,Automatizado
+TC-SAK-064,Performance,TestSakilaQueryPerformance,test_full_text_search_simulation,Medir LIKE search,Datos cargados,description LIKE '%Drama%',1. Medir tiempo,< 1 segundo,Performance,Media,Automatizado
+TC-SAK-065,Performance,TestSakilaQueryPerformance,test_order_by_performance,Medir ORDER BY en tabla grande,Datos cargados,ORDER BY rental_date DESC,1. Medir tiempo,< 2 segundos,Performance,Media,Automatizado
+TC-SAK-066,Performance,TestSakilaQueryPerformance,test_count_performance,Medir COUNT en tabla grande,Datos cargados,COUNT(*) FROM payment,1. Medir tiempo,< 0.5 segundos,Performance,Media,Automatizado
+TC-SAK-067,Performance,TestSakilaQueryPerformance,test_distinct_performance,Medir DISTINCT,Datos cargados,DISTINCT customer_id FROM rental,1. Medir tiempo,< 1 segundo,Performance,Media,Automatizado
+TC-SAK-068,Performance,TestSakilaViewPerformance,test_customer_list_view,Medir vista customer_list,Datos cargados,SELECT * FROM customer_list,1. Medir tiempo,< 2 segundos,Performance,Media,Automatizado
+TC-SAK-069,Performance,TestSakilaViewPerformance,test_film_list_view,Medir vista film_list,Datos cargados,SELECT * FROM film_list,1. Medir tiempo,< 2 segundos,Performance,Media,Automatizado
+TC-SAK-070,Performance,TestSakilaViewPerformance,test_sales_by_category_view,Medir vista sales_by_film_category,Datos cargados,SELECT * FROM sales_by_film_category,1. Medir tiempo,< 2 segundos,Performance,Media,Automatizado

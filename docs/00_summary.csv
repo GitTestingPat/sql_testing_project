@@ -1,0 +1,44 @@
+SQL DATABASE TESTING PROJECT - DOCUMENTACIÓN DE QA
+
+INFORMACIÓN GENERAL
+Proyecto,SQL Database Testing Project
+Repositorio,https://github.com/GitTestingPat/sql_testing_project
+Tecnologías,"Python 3.10+, pytest, MySQL 8.0+"
+Bases de Datos,test_database y sakila
+Total Tests,156
+Estado,Todos pasando ✓
+
+RESUMEN DE TESTS POR BASE DE DATOS
+Base de Datos,Tests,Descripción
+test_database,65,BD de prueba con users products y orders
+sakila,91,BD de ejemplo MySQL - tienda de DVD
+
+RESUMEN DE TESTS POR CATEGORÍA
+Categoría,Cantidad,Descripción
+CRUD Operations,25,Create Read Update Delete
+Data Integrity,26,Constraints tipos y consistencia
+Performance,14,Tiempos de ejecución
+Schema Validation,35,Estructura de BD Sakila
+Data Validation,22,Datos de Sakila
+Query Validation,21,Queries complejas Sakila
+Performance Sakila,13,Tiempos en Sakila
+
+HOJAS EN ESTE DOCUMENTO
+Hoja,Contenido
+1. Resumen,Esta hoja - información general
+2. Test Cases - test_database,65 casos de prueba detallados
+3. Test Cases - Sakila,70 casos de prueba detallados
+4. Clases Equivalencia,Clases de equivalencia y valores límite
+5. Checklist,Lista de verificación 60 items
+6. Trazabilidad,Matriz requisitos vs tests
+
+CÓMO USAR ESTE DOCUMENTO
+1. Importar cada archivo CSV como una hoja separada en Google Sheets
+2. Usar filtros para buscar tests específicos
+3. Actualizar columna ESTADO según ejecución
+4. Agregar COMENTARIOS según hallazgos
+
+CONTACTO
+Autor,Patricio
+Fecha Creación,Noviembre 2025
+Última Actualización,

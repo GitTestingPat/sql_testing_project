@@ -1,0 +1,31 @@
+CAMPO,TABLA,TIPO_DATO,CLASE_EQUIVALENCIA,VALORES_VÁLIDOS,VALORES_INVÁLIDOS,VALOR_LÍMITE_INFERIOR,VALOR_LÍMITE_SUPERIOR,NOTAS
+username,users,VARCHAR(50),Cadena alfanumérica única,testuser; user123; john_doe,NULL; "" (vacío); string > 50 chars; duplicado,1 caracter,50 caracteres,UNIQUE y NOT NULL constraint
+email,users,VARCHAR(100),Formato email único,test@example.com; user@domain.org,NULL; sin @; sin dominio; duplicado,a@b.co (6 chars),100 caracteres,UNIQUE y NOT NULL constraint
+password_hash,users,VARCHAR(255),Cadena hash,hash123; sha256_value,NULL; "" (vacío),1 caracter,255 caracteres,NOT NULL constraint
+first_name,users,VARCHAR(50),Cadena texto,John; María; José,NULL aceptado,1 caracter,50 caracteres,Nullable
+last_name,users,VARCHAR(50),Cadena texto,Doe; García; López,NULL aceptado,1 caracter,50 caracteres,Nullable
+age,users,INT,Entero positivo,18; 25; 65; 100,NULL aceptado; -1; string,0,2147483647,Nullable sin validación de rango en BD
+is_active,users,BOOLEAN,Booleano,TRUE; FALSE; 1; 0,string; 2; -1,0 (FALSE),1 (TRUE),Default TRUE
+name,products,VARCHAR(100),Cadena texto,Test Product; Laptop HP,NULL; "" (vacío),1 caracter,100 caracteres,NOT NULL constraint
+description,products,TEXT,Texto largo,Cualquier texto; descripción larga,NULL aceptado,0 caracteres,65535 caracteres,Nullable
+price,products,DECIMAL(10.2),Número decimal positivo,0.01; 29.99; 999.99,NULL; negativos,0.00,99999999.99,NOT NULL - 10 dígitos total 2 decimales
+stock,products,INT,Entero no negativo,0; 1; 100; 1000,NULL aceptado; negativos lógicamente inválidos,0,2147483647,Default 0
+category,products,VARCHAR(50),Cadena categoría,Electronics; Clothing; Books,NULL aceptado,1 caracter,50 caracteres,Nullable
+is_available,products,BOOLEAN,Booleano,TRUE; FALSE; 1; 0,string; 2; -1,0 (FALSE),1 (TRUE),Default TRUE
+user_id,orders,INT,FK existente,IDs existentes en users,0; -1; ID inexistente,1,MAX(users.id),FK con CASCADE DELETE
+product_id,orders,INT,FK existente,IDs existentes en products,0; -1; ID inexistente,1,MAX(products.id),FK con CASCADE DELETE
+quantity,orders,INT,Entero positivo,1; 5; 10; 100,NULL; 0; -1,1,2147483647,NOT NULL - mínimo lógico 1
+total_price,orders,DECIMAL(10.2),Número decimal positivo,0.01; 59.98; 999.99,NULL; negativos,0.00,99999999.99,NOT NULL - debe ser quantity * price
+status,orders,ENUM,Valor enumerado,pending; processing; shipped; delivered; cancelled,cualquier otro string; NULL,N/A,N/A,Default 'pending'
+actor_id,actor,INT,PK auto increment,1; 50; 200,0; -1; duplicado,1,200 (max actual),Sakila - PRIMARY KEY
+first_name,actor,VARCHAR(45),Cadena texto,PENELOPE; NICK; ED,NULL; "" (vacío),1 caracter,45 caracteres,Sakila - NOT NULL
+last_name,actor,VARCHAR(45),Cadena texto,GUINESS; WAHLBERG; CHASE,NULL; "" (vacío),1 caracter,45 caracteres,Sakila - NOT NULL
+film_id,film,INT,PK auto increment,1; 500; 1000,0; -1; duplicado,1,1000 (max actual),Sakila - PRIMARY KEY
+title,film,VARCHAR(128),Cadena texto,ACADEMY DINOSAUR; ACE GOLDFINGER,NULL; "" (vacío),1 caracter,128 caracteres,Sakila - NOT NULL
+rental_rate,film,DECIMAL(4.2),Decimal positivo,0.99; 2.99; 4.99,NULL; negativos; > 99.99,0.00,99.99,Sakila - NOT NULL
+rating,film,ENUM,Rating MPAA,G; PG; PG-13; R; NC-17,cualquier otro string,N/A,N/A,Sakila - valores fijos
+length,film,SMALLINT UNSIGNED,Minutos película,46; 120; 185,NULL aceptado; negativos; > 65535,0,65535,Sakila - Nullable
+customer_id,customer,INT,PK auto increment,1; 300; 599,0; -1; duplicado,1,599 (max actual),Sakila - PRIMARY KEY
+active,customer,TINYINT(1),Booleano,0; 1,2; -1; string,0,1,Sakila - Default 1
+rental_id,rental,INT,PK auto increment,1; 8000; 16044,0; -1; duplicado,1,16044 (max actual),Sakila - PRIMARY KEY
+amount,payment,DECIMAL(5.2),Monto pago,0.00; 4.99; 11.99,negativos; > 999.99,0.00,999.99,Sakila - puede ser 0 para ajustes
