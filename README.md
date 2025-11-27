@@ -426,6 +426,8 @@ Usar la ruta completa:
 La documentación completa de casos de prueba y análisis de testing está disponible en Google Sheets:
 
 📊 **[SQL Testing Project - Documentación QA](https://docs.google.com/spreadsheets/d/1M13hRENhFRlPA3dYDVCM5hzl46PCC-UZ78Jn1-h-kiU/edit?usp=drive_link)**
+<br>
+📄 **[SQL Testing Project - Plan de Pruebas](https://drive.google.com/file/d/10JRFzSosJ_Tg6LEcRb5p12sEk74OuGph/view?usp=sharing)**
 
 ### Contenido de la Documentación
 
